@@ -1,6 +1,8 @@
 # 🔊 Temu Dengar
 ### Collective Portfolio & Documentation Template
 
+[Live Preview Website](https://yohanesprass.github.io/temu-dengar/)
+
 **Temu Dengar** adalah template website portfolio modern yang dirancang khusus untuk dokumentasi acara musik, *live sessions*, atau kolektif kreatif. Fokus pada visual yang bersih, tipografi yang kuat, dan interaktivitas yang halus untuk menonjolkan konten audio-visual.
 
 > Template ini merupakan hasil pengembangan dari kebutuhan nyata sebuah kolektif musik yang telah berjalan selama 3 tahun — sangat fungsional untuk keperluan arsip sekaligus branding profesional untuk mencari sponsor.
