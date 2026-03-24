@@ -1,0 +1,503 @@
+/* ==========================================================================
+   1. GLOBAL & RESET
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background-color: #0b0b0b;
+    color: #ffffff;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.01;
+    pointer-events: none;
+    z-index: 9998;
+    background-image: url("/assets/images/noisy-background.jpg");
+}
+
+/* ==========================================================================
+   2. NAVIGATION
+   ========================================================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background: rgba(0, 0, 0, 0.9);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #333;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
+
+.logo-container:hover { opacity: 0.7; }
+
+.nav-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-text {
+    font-weight: 800;
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li { margin-left: 30px; }
+
+.nav-links a {
+    text-decoration: none;
+    color: #bbb;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-links a:hover { color: #fff; }
+
+/* ==========================================================================
+   3. SECTION MANAGEMENT & ANIMATIONS
+   ========================================================================== */
+.section {
+    padding: 100px 8% 60px;
+    min-height: 110vh;
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.section.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes scaleUp {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.2s; }
+.delay-2 { transition-delay: 0.4s; }
+.delay-3 { transition-delay: 0.6s; }
+
+/* ==========================================================================
+   4. HOME / HERO / ABOUT
+   ========================================================================== */
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-top: 50px;
+    text-align: center;
+}
+
+.sub-title {
+    display: block;
+    font-size: 0.9rem;
+    letter-spacing: 5px;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.logo-big {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+}
+
+.about-description {
+    max-width: 650px;
+    margin: 30px auto;
+    color: #aaa;
+    line-height: 1.8;
+    font-weight: 300;
+    font-size: 1.05rem;
+}
+
+.about-description strong { color: #fff; font-weight: 600; }
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: 80px 0 40px;
+}
+
+.section-header .line {
+    flex-grow: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    max-width: 100px;
+}
+
+.section-header h3 {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.btn-outline {
+    display: inline-block;
+    padding: 15px 35px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 2px;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: 0.4s;
+    margin-top: 20px;
+}
+
+.btn-outline:hover { background: #fff; color: #000; border-color: #fff; }
+
+/* ==========================================================================
+   5. PROJECT & PORTFOLIO GRID
+   ========================================================================== */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.project-item {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    overflow: hidden;
+    animation: scaleUp 0.4s ease forwards;
+}
+
+.project-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.project-item:hover img { transform: scale(1.1); filter: brightness(50%); }
+
+.project-item::after {
+    content: "View Project";
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.8);
+    color: #000;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.project-item:hover::after { opacity: 1; }
+
+.play-icon {
+    position: absolute;
+    top: 10px; right: 10px;
+    color: white;
+    background: rgba(0,0,0,0.5);
+    width: 30px; height: 30px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; font-size: 0.7rem;
+}
+
+/* Filter */
+.filter-container { margin: 20px 0; text-align: center; }
+.filter-btn {
+    background: none; border: 1px solid #444; color: #fff;
+    padding: 8px 20px; margin: 5px; cursor: pointer; border-radius: 20px;
+}
+.filter-btn.active { background: #fff; color: #000; }
+
+/* Featured Home */
+.featured-projects { margin-top: 80px; padding-bottom: 50px; }
+.featured-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px; max-width: 1000px; margin: 0 auto;
+}
+.featured-item {
+    position: relative; border-radius: 8px; overflow: hidden;
+    cursor: pointer; aspect-ratio: 16 / 9;
+}
+.featured-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+.featured-item:hover img { transform: scale(1.1); }
+.featured-item .vol-tag {
+    position: absolute; top: 10px; left: 10px;
+    background: rgba(0,0,0,0.7); padding: 5px 12px;
+    font-size: 0.7rem; border-radius: 4px; color: #fff;
+}
+
+/* ==========================================================================
+   6. STATS & COUNTDOWN
+   ========================================================================== */
+.stats-container { max-width: 800px; margin: 80px auto; padding: 0 20px; }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+.stat-item { padding: 20px 10px; border-right: 1px solid rgba(255, 255, 255, 0.05); }
+.stat-item:last-child { border-right: none; }
+.stat-number {
+    display: block; font-size: 2.2rem; font-weight: 800; color: #fff;
+    margin-bottom: 8px; font-family: 'Courier New', Courier, monospace;
+}
+.stat-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: #666; line-height: 1.4; }
+
+.upcoming-session {
+    max-width: 800px; width: 100%; margin: 60px auto; padding: 60px 40px;
+    background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px; text-align: center;
+}
+.status-dot {
+    width: 8px; height: 8px; background: #ff3e3e; border-radius: 50%;
+    box-shadow: 0 0 10px #ff3e3e; animation: pulse 1.5s infinite;
+}
+.countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 30px auto; max-width: 400px; }
+.countdown-item span { display: block; font-size: 2.5rem; font-weight: 800; font-family: 'Courier New', Courier, monospace; }
+.countdown-item small { font-size: 0.6rem; text-transform: uppercase; color: #666; letter-spacing: 2px; }
+
+/* ==========================================================================
+   7. JOURNAL (INSTAGRAM)
+   ========================================================================== */
+.journal-header { text-align: center; margin-bottom: 50px; }
+.section-subtitle { color: #666; font-size: 0.9rem; margin-top: 10px; letter-spacing: 1px; }
+.instagram-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-auto-rows: 1fr; gap: 30px; justify-content: center; align-items: start;
+}
+.insta-card {
+    background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px; padding: 15px; transition: all 0.4s ease;
+    width: 100%; max-width: 400px; margin: 0 auto; height: 600px;
+    overflow-y: auto; display: flex; flex-direction: column;
+    scrollbar-width: thin; scrollbar-color: #333 transparent;
+}
+.insta-card:hover { border-color: rgba(255, 255, 255, 0.2); transform: translateY(-10px); background: rgba(255, 255, 255, 0.04); }
+.insta-card::-webkit-scrollbar { width: 4px; }
+.insta-card::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
+
+iframe.instagram-media { min-width: 100% !important; width: 100% !important; border: none !important; box-shadow: none !important; margin: 0 !important; }
+
+/* Placeholder */
+.instagram-placeholder {
+    position: relative; width: 100%; height: 400px; background: #000;
+    display: flex; justify-content: center; align-items: center; overflow: hidden; border-radius: 8px;
+}
+.insta-bg-blur { width: 100%; height: 100%; object-fit: cover; filter: blur(15px); opacity: 0.4; }
+.insta-overlay { position: absolute; text-align: center; color: #fff; z-index: 5; }
+.insta-overlay i {
+    font-size: 3.5rem; margin-bottom: 15px;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    -webkit-background-clip: text; 
+    background-clip: text;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.btn-insta-ext {
+    display: inline-block; margin-top: 20px; padding: 12px 25px; background: #fff;
+    color: #000; text-decoration: none; font-weight: bold; border-radius: 30px; transition: 0.3s;
+}
+
+/* ==========================================================================
+   8. LIGHTBOX & MEDIA CONTAINERS
+   ========================================================================== */
+.lightbox {
+    display: none; position: fixed; z-index: 2000; top: 0; left: 0;
+    width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95);
+    justify-content: center; align-items: center; padding: 20px;
+}
+.lightbox-wrapper {
+    display: flex; flex-direction: column; width: fit-content;
+    max-width: 90vw; max-height: 95vh; background: #141414;
+    border-radius: 12px; overflow: hidden; box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+.lightbox-content img { max-width: 100%; max-height: 70vh; display: block; object-fit: contain; border-radius: 12px 12px 0 0; }
+.lightbox-info { width: 100%; padding: 20px; background: #1a1a1a; border-top: 1px solid #333; }
+#lightbox-title { font-size: 1.4rem; color: #fff; margin-bottom: 8px; }
+#lightbox-description { font-size: 0.95rem; color: #aaa; line-height: 1.5; }
+.close-lightbox { position: absolute; top: 30px; right: 40px; font-size: 40px; color: #fff; cursor: pointer; }
+.card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+
+/* Video & SoundCloud */
+.video-container { width: 80vw; max-width: 850px; aspect-ratio: 16 / 9; border-radius: 12px 12px 0 0; }
+.video-container iframe { width: 100%; height: 100%; border: none; }
+.soundcloud-wrapper {
+    width: 100%; max-width: 800px; margin: 0 auto; background: #000;
+    border-radius: 8px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+}
+.soundcloud-wrapper iframe { display: block; min-height: 450px; }
+
+/* ==========================================================================
+   9. CUSTOM CURSOR & WIDGETS
+   ========================================================================== */
+.cursor-dot, .cursor-outline {
+    pointer-events: none; position: fixed; top: 0; left: 0;
+    border-radius: 50%; z-index: 9999;
+    transition: width 0.3s, height 0.3s, background-color 0.3s, opacity 0.3s;
+}
+.cursor-dot { width: 6px; height: 6px; background-color: #fff; }
+.cursor-outline { width: 30px; height: 30px; border: 1px solid rgba(255, 255, 255, 0.5); }
+
+/* Music Widget */
+.music-widget {
+    position: fixed; bottom: 30px; right: 30px; z-index: 999;
+    display: flex; flex-direction: column; align-items: flex-end;
+}
+.widget-toggle {
+    background: #fff; color: #000; padding: 12px 20px; border-radius: 30px;
+    display: flex; align-items: center; gap: 10px; font-size: 0.8rem;
+    font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: 0.3s;
+}
+.widget-content {
+    width: 300px; height: 0; overflow: hidden; margin-bottom: 15px;
+    border-radius: 12px; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0;
+}
+.music-widget.active .widget-content { height: 300px; opacity: 1; }
+
+/* ==========================================================================
+   10. CONTACT SECTION
+   ========================================================================== */
+.contact-container { max-width: 900px; margin: 0 auto; text-align: left; }
+.contact-header h2 { font-size: 3rem; letter-spacing: -1px; margin: 10px 0; }
+.line-separator { width: 60px; height: 4px; background: #fff; margin-bottom: 40px; }
+.contact-content { display: grid; grid-template-columns: 1.5fr 1fr; gap: 60px; align-items: center; }
+.contact-text p { color: #888; font-size: 1.1rem; line-height: 1.6; margin-bottom: 40px; }
+.detail-item { margin-bottom: 25px; }
+.detail-item span { display: block; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; color: #555; margin-bottom: 5px; }
+.instagram-link { font-size: 1.2rem; color: #fff; text-decoration: none; transition: 0.3s; }
+.contact-cta { background: #111; padding: 40px; border-radius: 4px; text-align: center; }
+.btn-contact { display: block; padding: 15px; background: #fff; color: #000; text-decoration: none; text-transform: uppercase; font-weight: 700; transition: 0.3s; }
+
+/* ==========================================================================
+   11. FOOTER & PARTNERS ARCHIVE
+   ========================================================================== */
+footer {
+    padding: 80px 20px 40px; text-align: center;
+    background-color: #080808; border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.partners-archive-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    max-width: 1000px; margin: 40px auto 0;
+}
+.vol-column { padding: 20px 10px; display: flex; flex-direction: column; border-right: 1px solid rgba(255, 255, 255, 0.05); }
+.vol-column:last-child { border-right: none; }
+.vol-title { font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 25px; font-family: 'Courier New', Courier, monospace; }
+.vol-logos { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px; margin-top: 10px; }
+.vol-logos img { height: 20px; width: auto; filter: grayscale(100%) brightness(0.5); opacity: 0.4; transition: 0.3s; }
+.vol-logos img:hover { filter: grayscale(0%) brightness(1); opacity: 1; }
+.empty-slot { font-size: 0.5rem; color: #333; border: 1px dashed #222; padding: 10px; width: 80%; text-transform: uppercase; }
+.current-vol .vol-title { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+.footer-socials { margin: 30px 0 15px; }
+.footer-socials a { color: #666; font-size: 1.2rem; margin: 0 15px; transition: 0.3s; }
+.copyright { font-size: 0.65rem; color: #333; letter-spacing: 1px; text-transform: uppercase; }
+
+
+/* ==========================================================================
+   12. Lazy Loading Images
+   ========================================================================== */
+.lazy-img {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.lazy-img.loaded {
+    opacity: 1;
+}
+
+/* Tambahkan background placeholder agar grid tidak kosong saat loading */
+.project-item, .featured-item {
+    background-color: #111; /* Warna gelap senada tema */
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   13. MEDIA QUERIES (RESPONSIVE)
+   ========================================================================== */
+@media (min-width: 769px) {
+    body, a, button, .project-item, .nav-item, .filter-btn, .widget-toggle { cursor: none !important; }
+}
+
+@media (max-width: 768px) {
+    .cursor-dot, .cursor-outline { display: none; }
+    body { cursor: auto !important; }
+    .project-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 4px; }
+    .featured-grid { grid-template-columns: 1fr; padding: 0 20px; }
+    .instagram-grid { display: flex; flex-direction: column; align-items: center; padding: 0 10px; }
+    .insta-card { width: 100% !important; height: auto !important; }
+    .partners-archive-grid { grid-template-columns: 1fr; }
+    .vol-column { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 10px; }
+    .stat-item:nth-child(2n) { border-right: none; }
+    .contact-content { grid-template-columns: 1fr; gap: 40px; }
+}
+
+@media (max-width: 600px) {
+    .navbar { padding: 15px 5%; }
+    .nav-links li { margin-left: 15px; }
+    .nav-links a { font-size: 0.9rem; }
+    .logo-text { display: none; }
+    .section { padding: 80px 10px 40px; }
+    .project-item::after { display: none; }
+    .widget-content { width: 250px; }
+}
+
+@media (max-width: 350px) {
+    .nav-links li { margin-left: 10px; }
+    .logo-big { font-size: 2rem; }
+}
